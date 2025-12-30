@@ -1,0 +1,85 @@
+﻿<Window x:Class="VolumeOverlayApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="VolumeOverlay" Height="54" Width="220"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Topmost="True" ShowInTaskbar="False" 
+        WindowStartupLocation="Manual">
+
+    <Border Background="#1F1F1F" CornerRadius="8" BorderBrush="#333333" BorderThickness="1" MouseEnter="TimerPauseHovered" MouseLeave="TimerStartHovered">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" Direction="-90" ShadowDepth="4" Opacity="0.5"/>
+        </Border.Effect>
+
+        <Grid Margin="15,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Name="btnMute" Grid.Column="0" Width="40" Height="40" 
+                    Background="Transparent" BorderThickness="0" 
+                    Click="BtnMute_Click" Cursor="Hand">
+                <Button.Content>
+                    <TextBlock Name="iconMute" Text="&#xE767;" FontFamily="Segoe MDL2 Assets" 
+                               FontSize="20" Foreground="#FFFFFF"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#33FFFFFF"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                <TextBlock Name="txtAppName" Text="Default" Foreground="#FFFFFF" 
+                           FontSize="13" FontWeight="SemiBold" Margin="0,0,0,4"/>
+
+                <Slider Name="volSlider" Height="20" Minimum="0" Maximum="100" Value="60"
+                        IsMoveToPointEnabled="True" Focusable="False"
+                        ValueChanged="Slider_ValueChanged"
+                        PreviewMouseLeftButtonDown="Slider_MouseDown"
+                        PreviewMouseLeftButtonUp="Slider_MouseUp">
+                    <Slider.Template>
+                        <ControlTemplate TargetType="Slider">
+                            <Grid VerticalAlignment="Center">
+                                <Border Height="4" Background="#333333" CornerRadius="2"/>
+                                <Track Name="PART_Track">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" BorderThickness="0">
+                                            <RepeatButton.Template>
+                                                <ControlTemplate TargetType="RepeatButton">
+                                                    <Border Height="4" Background="#60CDFF" CornerRadius="2"/>
+                                                </ControlTemplate>
+                                            </RepeatButton.Template>
+                                        </RepeatButton>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Width="0" Height="0"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Slider.Template>
+                </Slider>
+            </StackPanel>
+
+            <TextBlock Name="txtVolume" Grid.Column="2" Text="60" Foreground="#E0E0E0" 
+                       FontSize="16" FontWeight="Regular" VerticalAlignment="Center"/>
+        </Grid>
+    </Border>
+</Window>
